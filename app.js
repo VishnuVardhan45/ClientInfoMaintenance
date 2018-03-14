@@ -28,6 +28,9 @@ db.once('open', function() {
         if (err) {
             throw err;
         }
+        result.forEach(function(element) {
+            element.image.data = new Buffer(element.image.data,"base64").toString('ascii');
+        }, this);
         res.json(result);
     });
 }); 
