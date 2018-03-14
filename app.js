@@ -30,9 +30,10 @@ db.once('open', function() {
         }
         var obj =[];
         result.forEach(function(element) {
-            var temp = {};
-            temp.bookId = element.bookId
-            // obj.image =  new Buffer(element.image.data, 'base64').toString('utf8');
+            var temp = {
+                bookId : element.bookId,
+                image : new Buffer(element.image.data, 'base64').toString('utf8')
+            };
             obj.push(temp);
         }, this);
         res.json(obj);
