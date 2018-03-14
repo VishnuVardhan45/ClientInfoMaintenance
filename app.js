@@ -41,12 +41,13 @@ app.post('/bookimage', function (req, res) {
         bookId: data.bookId,
         image : image
     }
-    BookImages.addImage(obj,function (err, img) {
-        if (err) {
-            throw err;
-        }
-        res.json(img);
-    });
+    res.send(obj);
+    // BookImages.addImage(obj,function (err, img) {
+    //     if (err) {
+    //         throw err;
+    //     }
+    //     res.json(img);
+    // });
 });
 
 app.get('/', function (req, res) {
