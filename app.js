@@ -48,7 +48,10 @@ app.post('/bookimage', function (req, res) {
         if (err) {
             res.json(err);
         }
-        res.json(new Buffer(res.image.data).toString('base64'));
+       var obj = {
+           data : new Buffer(res.image.data).toString('base64')
+        }
+        res.json(obj);
     });
 });
 
