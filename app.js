@@ -34,7 +34,7 @@ app.post('/bookimage', function (req, res) {
     var data = req.body;
     var image = new Image();
     image.contentType = 'image/png';
-    image.image = new Buffer(data.image,'base64'); 
+    // image.image = new Buffer(data.image,'base64'); 
     
     var obj = {
         bookId: data.bookId,
