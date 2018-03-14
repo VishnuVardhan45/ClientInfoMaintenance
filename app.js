@@ -32,7 +32,7 @@ db.once('open', function() {
         result.forEach(function(element) {
             var temp = {
                 bookId : element.bookId,
-                image : "data:image/jpeg;base64,"  + new Buffer(element.image.data, 'base64')
+                image : "data:image/jpeg;base64,"  + new Buffer(element.image.data, 'base64').toString()
             };
             obj.push(temp);
         }, this);
