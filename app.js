@@ -28,16 +28,16 @@ db.once('open', function() {
         if (err) {
             throw err;
         }
-        var obj =[];
-        var resultobj = JSON(result);
-        resultobj.forEach(function(element) {
-            var temp = {
-                bookId : element.bookId,
-                image : new Buffer(element.image.data, 'base64').toString('utf8')
-            };
-            obj.push(temp);
-        }, this);
-        res.json(obj);
+        // var obj =[];
+        // var resultobj = JSON(result);
+        // resultobj.forEach(function(element) {
+        //     var temp = {
+        //         bookId : element.bookId,
+        //         image : new Buffer(element.image.data, 'base64').toString('utf8')
+        //     };
+        //     obj.push(temp);
+        // }, this);
+        res.json(result);
     });
 }); 
 
