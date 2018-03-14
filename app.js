@@ -32,13 +32,13 @@ db.once('open', function() {
 
 app.post('/bookimage', function (req, res) {
     var data = req.body;
-    var imageObj = {
-      contentType = "image/png",
-      image = new Buffer(data.image,"base64")
-    }
+    // var imageObj = {
+    //   contentType = "image/png",
+    //   image = new Buffer(data.image,"base64")
+    // }
     var obj = {
         bookId: data.bookId,
-        image : imageObj
+        image : new Buffer(data.image.split(",")[1],"base64")
     }
     //  res.json(obj);
     BookImages.addImage(obj,function (err, img) {
