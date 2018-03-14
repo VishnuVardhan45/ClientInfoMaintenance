@@ -28,10 +28,12 @@ db.once('open', function() {
         if (err) {
             throw err;
         }
-        var obj ={}
+        var obj =[];
         result.forEach(function(element) {
-            obj.bookId = element.bookId
+            var temp = {};
+            temp.bookId = element.bookId
             // obj.image =  new Buffer(element.image.data, 'base64').toString('utf8');
+            obj.push(temp);
         }, this);
         res.json(obj);
     });
