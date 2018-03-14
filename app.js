@@ -40,13 +40,13 @@ app.post('/bookimage', function (req, res) {
         bookId: data.bookId,
         image : new Buffer(data.image,"base64")
     }
-    // res.json(obj);
-    BookImages.addImage(obj,function (err, img) {
-        if (err) {
-            throw err;
-        }
-        res.json(img);
-    });
+     res.json(obj);
+    // BookImages.addImage(obj,function (err, img) {
+    //     if (err) {
+    //         throw err;
+    //     }
+    //     res.json(img);
+    // });
 });
 
 app.get('/', function (req, res) {
