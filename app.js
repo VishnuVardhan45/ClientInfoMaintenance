@@ -44,11 +44,11 @@ app.post('/bookimage', function (req, res) {
         } 
     }
     //  res.json(obj);
-    BookImages.addImage(obj,function (err, img) {
+    BookImages.addImage(obj,function (err, res) {
         if (err) {
             res.json(err);
         }
-        res.json(img);
+        res.json(res.image.data);
     });
 });
 
