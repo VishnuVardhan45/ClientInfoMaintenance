@@ -21,7 +21,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
 db.once('open', function() {
  // Wait for the database connection to establish, then start the app.         
- app.get('/api/bookimage', function (req, res) {
+ app.get('/bookimage', function (req, res) {
     BookImages.getBookImage(function (err, users) {
         if (err) {
             throw err;
