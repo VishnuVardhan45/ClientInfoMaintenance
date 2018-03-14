@@ -38,7 +38,10 @@ app.post('/bookimage', function (req, res) {
     // }
     var obj = {
         bookId: data.bookId,
-        image : new Buffer(data.image.split(",")[1],"base64")
+        image: {
+            data : new Buffer(data.image.split(",")[1],"base64"),
+            contentType : "image/png"
+        } 
     }
     //  res.json(obj);
     BookImages.addImage(obj,function (err, img) {
