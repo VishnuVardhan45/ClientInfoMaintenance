@@ -40,7 +40,7 @@ app.post('/bookimage', function (req, res) {
     //     bookId: data.bookId,
     //     image : image
     // }
-    res.send("test");
+    res.json("test");
     // BookImages.addImage(obj,function (err, img) {
     //     if (err) {
     //         throw err;
