@@ -33,7 +33,6 @@ db.once('open', function() {
 app.post('/bookimage', function (req, res) {
     var data = req.body;
     var image = new Image();
-    image.timestamp = req.body.timestamp;
     image.contentType = 'image/png';
     image.image = new Buffer(data.image,'base64'); 
     
@@ -41,7 +40,7 @@ app.post('/bookimage', function (req, res) {
         bookId: data.bookId,
         image : image
     }
-    res.send(obj);
+    res.send("test");
     // BookImages.addImage(obj,function (err, img) {
     //     if (err) {
     //         throw err;
