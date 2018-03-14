@@ -32,12 +32,14 @@ db.once('open', function() {
 
 app.post('/bookimage', function (req, res) {
     var image = req.body;
-    BookImages.addImage(image,function (err, img) {
-        if (err) {
-            throw err;
-        }
-        res.json(img);
-    });
+    res.json(image);
+    
+    // BookImages.addImage(image,function (err, img) {
+    //     if (err) {
+    //         throw err;
+    //     }
+    //     res.json(img);
+    // });
 });
 app.get('/', function (req, res) {
     res.send("Hey TAG!");
