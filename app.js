@@ -31,19 +31,25 @@ db.once('open', function() {
 }); 
 
 app.post('/bookimage', function (req, res) {
-    var image = req.body;
-    res.json(image);
-    
-    // BookImages.addImage(image,function (err, img) {
-    //     if (err) {
-    //         throw err;
-    //     }
-    //     res.json(img);
-    // });
+    var data = req.body;
+    var image = new Image();
+    image.image = new Buffer(data.image,'base64'); 
+    var obj = {
+        bookId: data.bookId,
+        image : image
+    }
+    BookImages.addImage(obj,function (err, img) {
+        if (err) {
+            throw err;
+        }
+        res.json(img);
+    });
 });
+
 app.get('/', function (req, res) {
     res.send("Hey TAG!");
 });
+
 app.listen(process.env.PORT || 5000);
 console.log('Running on port 3000')
 });
