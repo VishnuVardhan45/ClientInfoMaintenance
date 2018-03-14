@@ -31,7 +31,7 @@ db.once('open', function() {
         var obj ={}
         result.forEach(function(element) {
             obj.bookId = element.bookId,
-            obj.image =  new Buffer(element.image.data, 'base64').toString('utf8');
+            // obj.image =  new Buffer(element.image.data, 'base64').toString('utf8');
         }, this);
         res.json(obj);
     });
