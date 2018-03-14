@@ -1,0 +1,17 @@
+{
+  "name": "bmbapi",
+  "version": "1.0.0",
+  "description": "Api for BMB",
+  "main": "app.js",
+  "dependencies": {
+    "express":"*",
+    "body-parser":"*",
+    "mongoose":"*"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TAG",
+  "license": "ISC"
+}
