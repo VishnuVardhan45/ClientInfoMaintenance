@@ -33,7 +33,7 @@ db.once('open', function() {
 app.get('/', function (req, res) {
     res.send("Hey TAG!");
 });
-app.listen(3000);
+app.listen(process.env.PORT || 5000);
 console.log('Running on port 3000')
 });
 
