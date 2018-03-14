@@ -22,11 +22,11 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
  // Wait for the database connection to establish, then start the app.         
  app.get('/bookimage', function (req, res) {
-    BookImages.getBookImage(function (err, users) {
+    BookImages.getBookImage(function (err, result) {
         if (err) {
             throw err;
         }
-        res.json(users);
+        res.json(result);
     });
 }); 
 
@@ -49,7 +49,7 @@ app.post('/bookimage', function (req, res) {
             res.json(err);
         }
        var obj = {
-           data : new Buffer(res.image.data).toString('base64')
+           data : new Buffer(res.image.data).toString("base64")
         }
         res.json(obj);
     });
