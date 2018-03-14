@@ -29,7 +29,7 @@ db.once('open', function() {
             throw err;
         }
         var obj =[];
-        var resultobj = json(result);
+        var resultobj = JSON(result);
         resultobj.forEach(function(element) {
             var temp = {
                 bookId : element.bookId,
