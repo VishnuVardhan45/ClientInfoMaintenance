@@ -33,7 +33,10 @@ db.once('open', function() {
 app.post('/bookimage', function (req, res) {
     var data = req.body;
     var image = new Image();
+    image.timestamp = req.body.timestamp;
+    image.contentType = req.body.contentType;
     image.image = new Buffer(data.image,'base64'); 
+    
     var obj = {
         bookId: data.bookId,
         image : image
