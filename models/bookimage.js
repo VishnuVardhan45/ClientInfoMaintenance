@@ -22,6 +22,6 @@ module.exports.getBookImage = function (callback, limit) {
     BookImage.find(callback).limit(limit);
 }
 
-// module.exports.addImage = function (image,callback) {
-//     BookInfo.create(image,callback);
-// }
+module.exports.addImage = function (image,callback) {
+    BookImage.create(image,callback);
+}
