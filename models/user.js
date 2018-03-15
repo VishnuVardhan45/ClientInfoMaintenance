@@ -2,6 +2,10 @@ var mongoose = require('mongoose');
 
 
 var userSchema = mongoose.Schema({
+    name: {
+        type:string,
+        required : true
+    },
     email: {
         type: String,
         required: true
@@ -22,26 +26,23 @@ var userSchema = mongoose.Schema({
 
 var User = module.exports = mongoose.model('users', userSchema);
 
-//Get Users
-
-module.exports.getUsers = function (callback, limit) {
-    User.find(callback).limit(limit);
+module.exports.authorizeUser = function (obj,callback) {
+    User.findOne({'email':obj.email, 'password':obj.password},'name email',callback);
 }
 
-module.exports.getUsersByEmail = function (email,callback) {
-    User.findById(email,callback);
-}
-
-module.exports.addUser = function (user,callback) {
-    User.create(user,callback);
+module.exports.addUser = function (obj,callback) {
+    var data = user.findOne({'email': obj.email});
+    if(data) return "Email Already exists";
+    User.create(obj,callback);
 }
 
 module.exports.updateUser = function (id,user, options, callback) {
     var query = {_id: id};
     var update = {
+        name: user.name,
         email: user.title,
-        password: user.author,
-        updated_date: Date.now
+        password: user.password,
+        updated_date: new Date()
     }
     User.findOneAndUpdate(query, update, options, callback);
 }

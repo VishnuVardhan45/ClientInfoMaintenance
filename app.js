@@ -7,7 +7,7 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
-// User = require('./models/user');
+User = require('./models/user');
 BooksInfo = require('./models/bookinfo');
 BookImages = require('./models/bookimage');
 BookContact = require('./models/bookcontact');
@@ -82,6 +82,24 @@ db.once('open', function () {
 
     });
 
+    app.post('/login', function (req, res) {
+        var user = req.body;
+        User.authorizeUser(user, function (err, suc) {
+            if (err) {
+                res.json(err);
+            }
+            res.json(suc);
+        });
+    });
+    app.post('/authorize', function (req, res) {
+        var user = req.body;
+        User.addUser(user, function (err, suc) {
+            if (err) {
+                res.json(err);
+            }
+            res.json(suc);
+        });
+    });
 
 
     app.get('/bookimage', function (req, res) {
