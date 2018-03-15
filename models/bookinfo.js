@@ -48,7 +48,7 @@ var bookInfoSchema = mongoose.Schema({
     }
 });
 
-var BookInfo = module.exports = mongoose.model('bookinfo', bookInfoSchema);
+var BookInfo = module.exports = mongoose.model('bookinfos', bookInfoSchema);
 
 
 module.exports.getBooks = function (callback, limit) {
