@@ -3,7 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var cors = require('cors');
-app.use(cors({origin: null}));
+app.use(cors({origin: '*'}));
 
 app.use(bodyParser.json());
 
