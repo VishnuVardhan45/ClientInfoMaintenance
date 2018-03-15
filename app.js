@@ -83,8 +83,8 @@ db.once('open', function () {
     });
 
     app.post('/authorize', function (req, res) {
-        var user = req.body;
-        User.authorizeUser(user, function (err, suc) {
+        var obj = req.body;
+        User.authorizeUser(obj, function (err, suc) {
             if (err) {
                 res.json(err);
             }
