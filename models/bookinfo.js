@@ -2,10 +2,6 @@ var mongoose = require('mongoose');
 
 
 var bookInfoSchema = mongoose.Schema({
-    _id: {
-        type: String,
-        required: true
-    },
     name: {
         type: String,
         required: true
@@ -52,7 +48,7 @@ var bookInfoSchema = mongoose.Schema({
     }
 });
 
-var BookInfo = module.exports = mongoose.model('booksinfo', bookInfoSchema);
+var BookInfo = module.exports = mongoose.model('bookinfo', bookInfoSchema);
 
 
 module.exports.getBooks = function (callback, limit) {
@@ -64,6 +60,9 @@ module.exports.getBookById = function (id,callback) {
 }
 
 module.exports.addBook = function (book,callback) {
+    book.created_date = new Date();
+    book.status = "NEW";
+    book.uid =  "5aa93239734d1d6b7120f9de";
     BookInfo.create(book,callback);
 }
 

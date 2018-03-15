@@ -1,76 +1,91 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
- var mongoose = require('mongoose');
+var mongoose = require('mongoose');
 var cors = require('cors');
 app.use(cors());
 
 app.use(bodyParser.json());
 
 // User = require('./models/user');
-// BooksInfo = require('./models/bookinfo');
+BooksInfo = require('./models/bookinfo');
 BookImages = require('./models/bookimage');
 
 //connect to Mongoose
-var options = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }, 
-replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } } };       
+var options = {
+    server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
+    replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }
+};
 var mongodbUri = 'mongodb://thallapa:xqytw246@ds147274.mlab.com:47274/bmb';
 // mongoose.connect('mongodb://localhost/BMB');
 mongoose.connect(mongodbUri);
 
-var db= mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));  
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
 
-db.once('open', function() {
- // Wait for the database connection to establish, then start the app.         
- app.get('/bookimage', function (req, res) {
-    BookImages.getBookImage(function (err, result) {
-        if (err) {
-            throw err;
-        }
-        var obj =[];
-        result.forEach(function(element) {
-            var temp = {
-                bookId : element.bookId,
-                image : "data:image/jpeg;base64,"  + new Buffer(element.image.data).toString('base64')
-            };
-            obj.push(temp);
-        }, this);
-        res.json(obj);
+db.once('open', function () {
+    // Wait for the database connection to establish, then start the app.    
+
+    app.post('/postbook', function (req, res) {
+        var book = req.body.bookObj;
+        BooksInfo.addBook(book, function (err, book) {
+            if (err) {
+                throw err;
+            }
+            res.json(book);
+        });
     });
-}); 
 
-app.post('/bookimage', function (req, res) {
-    var data = req.body;
-    // var imageObj = {
-    //   contentType = "image/png",
-    //   image = new Buffer(data.image,"base64")
-    // }
-    var obj = {
-        bookId: data.bookId,
-        image: {
-            data : new Buffer(data.image.split(",")[1],"base64"),
-            contentType : "image/png"
-        } 
-    }
-    //  res.json(obj);
-    BookImages.addImage(obj,function (err, res) {
-        if (err) {
-            res.json(err);
-        }
-       var obj = {
-           data : new Buffer(res.image.data).toString("base64")
-        }
-        res.json(obj);
+
+
+    app.get('/bookimage', function (req, res) {
+        BookImages.getBookImage(function (err, result) {
+            if (err) {
+                throw err;
+            }
+            var obj = [];
+            result.forEach(function (element) {
+                var temp = {
+                    bookId: element.bookId,
+                    image: "data:image/jpeg;base64," + new Buffer(element.image.data).toString('base64')
+                };
+                obj.push(temp);
+            }, this);
+            res.json(obj);
+        });
     });
-});
 
-app.get('/', function (req, res) {
-    res.send("Hey TAG!");
-});
+    app.post('/bookimage', function (req, res) {
+        var data = req.body;
+        // var imageObj = {
+        //   contentType = "image/png",
+        //   image = new Buffer(data.image,"base64")
+        // }
+        var obj = {
+            bookId: data.bookId,
+            image: {
+                data: new Buffer(data.image.split(",")[1], "base64"),
+                contentType: "image/png"
+            }
+        }
+        //  res.json(obj);
+        BookImages.addImage(obj, function (err, res) {
+            if (err) {
+                res.json(err);
+            }
+            var obj = {
+                data: new Buffer(res.image.data).toString("base64")
+            }
+            res.json(obj);
+        });
+    });
 
-app.listen(process.env.PORT || 5000);
-console.log('Running on port 3000')
+    app.get('/', function (req, res) {
+        res.send("Hey TAG!");
+    });
+
+    app.listen(process.env.PORT || 5000);
+    console.log('Running on port 3000')
 });
 
 
