@@ -30,7 +30,7 @@ db.once('open', function () {
         var book = req.body.bookObj;
         BooksInfo.addBook(book, function (err, book) {
             if (err) {
-                throw err;
+                res.json(err);
             }
             res.json(book);
         });
