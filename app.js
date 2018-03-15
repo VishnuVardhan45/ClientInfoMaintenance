@@ -2,15 +2,16 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-
+var cors = require('cors');
+app.use(cors());
 
 app.use(bodyParser.json());
 
-User = require('./models/user');
 BooksInfo = require('./models/bookinfo');
 BookImages = require('./models/bookimage');
 BookContact = require('./models/bookcontact');
 BookAcademic = require('./models/bookAcademicInfo');
+User = require('./models/user');
 
 
 //connect to Mongoose
@@ -81,7 +82,7 @@ db.once('open', function () {
 
     });
 
-    app.post('/authorize', function (req, res) {
+    app.post('/login', function (req, res) {
         var obj = req.body;
         User.authorizeUser(obj, function (err, suc) {
             if (err) {
