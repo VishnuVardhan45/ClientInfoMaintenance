@@ -82,7 +82,7 @@ db.once('open', function () {
 
     });
 
-    app.post('/login', function (req, res) {
+    app.post('/authorize', function (req, res) {
         var user = req.body;
         User.authorizeUser(user, function (err, suc) {
             if (err) {
@@ -91,7 +91,7 @@ db.once('open', function () {
             res.json(suc);
         });
     });
-    app.post('/authorize', function (req, res) {
+    app.post('/register', function (req, res) {
         var user = req.body;
         User.addUser(user, function (err, suc) {
             if (err) {
