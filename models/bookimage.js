@@ -19,5 +19,6 @@ module.exports.getBookImage = function (callback, limit) {
 }
 
 module.exports.inserManyImages = function (arr,callback) {
+    if(arr)
     BookImage.insertMany(arr,callback);
 }

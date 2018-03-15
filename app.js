@@ -11,6 +11,8 @@ app.use(bodyParser.json());
 BooksInfo = require('./models/bookinfo');
 BookImages = require('./models/bookimage');
 BookContact = require('./models/bookcontact');
+BookAcademic = require('./models/bookAcademicInfo');
+
 
 //connect to Mongoose
 var options = {
@@ -43,6 +45,18 @@ db.once('open', function () {
                 reqCount++;
             });
 
+            if(book.isAcademic == 'Y') {
+                book.bookId = suc._id;
+                BookAcademic.addBookAcademic(book, function (err, suc) {
+                    if (err) {
+                        res.json(err);
+                    }
+                    reqCount++;
+                });
+
+            }
+
+
             var imageArr = req.body.imageArr;
             var imgFinalArr = [];
             imageArr.forEach(function (element, index) {
@@ -61,7 +75,7 @@ db.once('open', function () {
                 }
                 reqCount++;
             });
-            if (reqCount == 3)
+            if (reqCount == 4)
                 res.json(suc);
         });
 
