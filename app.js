@@ -29,20 +29,43 @@ db.once('open', function () {
 
     app.post('/postbook', function (req, res) {
         var book = req.body.bookObj;
+        var reqCount = 0;
         BooksInfo.addBook(book, function (err, suc) {
             if (err) {
                 res.json(err);
             }
+            reqCount++;
             book.bookId = suc._id;
             BookContact.addBookContact(book, function (err, suc) {
                 if (err) {
                     res.json(err);
                 }
-                res.json(suc);
+                reqCount++;
             });
+
+            var imageArr = req.body.imageArr;
+            var imgFinalArr = [];
+            imageArr.forEach(function (element, index) {
+                var obj = {
+                    bookId: suc._id,
+                    image: {
+                        data: new Buffer(element.split(",")[1], "base64"),
+                        contentType: "image/png"
+                    }
+                };
+                imgFinalArr.push(obj);
+            }, this);
+            BookImages.inserManyImages(imgFinalArr, function (err, suc) {
+                if (err) {
+                    res.json(err);
+                }
+                reqCount++;
+            });
+            if (reqCount == 3)
+                res.json(suc);
         });
-        
-        
+
+
     });
 
 

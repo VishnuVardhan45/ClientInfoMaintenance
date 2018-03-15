@@ -18,6 +18,6 @@ module.exports.getBookImage = function (callback, limit) {
     BookImage.find(callback).limit(limit);
 }
 
-module.exports.addImage = function (image,callback) {
-    BookImage.create(image,callback);
+module.exports.inserManyImages = function (arr,callback) {
+    BookImage.insertMany(arr,callback);
 }
