@@ -10,6 +10,7 @@ app.use(bodyParser.json());
 // User = require('./models/user');
 BooksInfo = require('./models/bookinfo');
 BookImages = require('./models/bookimage');
+BookContact = require('./models/bookcontact');
 
 //connect to Mongoose
 var options = {
@@ -28,12 +29,20 @@ db.once('open', function () {
 
     app.post('/postbook', function (req, res) {
         var book = req.body.bookObj;
-        BooksInfo.addBook(book, function (err, book) {
+        BooksInfo.addBook(book, function (err, suc) {
             if (err) {
                 res.json(err);
             }
-            res.json(book);
+            book.bookId = suc._id;
+            BookContact.addBookContact(book, function (err, suc) {
+                if (err) {
+                    res.json(err);
+                }
+                res.json(suc);
+            });
         });
+        
+        
     });
 
 
