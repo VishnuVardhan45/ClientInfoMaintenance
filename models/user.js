@@ -32,15 +32,12 @@ module.exports.authorizeUser = function (obj, callback) {
 
 module.exports.addUser = function (obj, callback) {
     User.count({ 'email': obj.email }, function (err, docs) {
-        return function (err, docs) { };
-    });
-
-    User.count({ 'email': obj.email }, function (err, docs) {
+        if(err){callback({data:"ERROR"},null)};
         if (!docs) {
             obj.created_date = new Date();
              User.create(obj, callback);
         } else {
-            callback({ data: "Email Already Exists" });
+            callback({ data: "INVALID" }, null);
         }
     });
 }
