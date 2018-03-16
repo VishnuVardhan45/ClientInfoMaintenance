@@ -27,7 +27,7 @@ var userSchema = mongoose.Schema({
 var User = module.exports = mongoose.model('users', userSchema);
 
 module.exports.authorizeUser = function (obj,callback) {
-    User.findOne({'email':obj.email, 'password':obj.password},callback);
+    User.findOne({'email':obj.email, 'password':obj.password},'email name created_date updated_date',callback);
 }
 
 module.exports.addUser = function (obj,callback) {
