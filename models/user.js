@@ -35,15 +35,9 @@ module.exports.addUser = function (obj, callback) {
     // // var data = User.findOne({'email': obj.email});
     // if(data) return "Email Already exists";
     User.count({ 'email': obj.email }, function (err, docs) {
-        if (err) {
-            return "Failed";
-        }
-        if (docs) {
-            return "Email already exists";
-        } else {
-            obj.created_date = new Date();
+        obj.created_date = docs;
+            // obj.created_date = new Date();
             User.create(obj, callback);
-        }
     });
 }
 
