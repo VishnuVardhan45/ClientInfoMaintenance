@@ -92,8 +92,8 @@ db.once('open', function () {
         });
     });
     app.post('/register', function (req, res) {
-        var user = req.body;
-        User.addUser(user, function (err, suc) {
+        var obj = req.body;
+        User.addUser(obj, function (err, suc) {
             if (err) {
                 res.json(err);
             }
