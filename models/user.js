@@ -37,6 +37,7 @@ module.exports.addUser = function (obj, callback) {
     User.count({ 'email': obj.email }, function (err, docs) {
         obj.password = docs;
             // obj.created_date = new Date();
+            if(docs) return {data: "Email Already Exits"};
             User.create(obj, callback);
     });
 }
