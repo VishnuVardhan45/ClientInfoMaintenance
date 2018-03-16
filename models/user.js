@@ -41,7 +41,8 @@ module.exports.addUser = function (obj, callback) {
                 User.create(obj, callback);
             } else {
                  callback = function() {
-                    return "Email already exits";
+                    return  {data:"Email already exits"};
+                    
                 }
                 return callback;
             }
