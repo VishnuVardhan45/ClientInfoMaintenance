@@ -27,11 +27,11 @@ var userSchema = mongoose.Schema({
 var User = module.exports = mongoose.model('users', userSchema);
 
 module.exports.authorizeUser = function (obj, callback) {
-    User.findOne({ 'email':  /^obj.email$/i, 'password': /^obj.password$/i }, 'email name created_date updated_date', callback);
+    User.findOne({ 'email':  obj.email, 'password': obj.password }, 'email name created_date updated_date', callback);
 }
 
 module.exports.addUser = function (obj, callback) {
-    User.count({ 'email': /^obj.email$/i} , function (err, docs) {
+    User.count({ 'email': obj.email }, function (err, docs) {
         if(err){callback({data:"ERROR"})};
         if (!docs) {
             obj.created_date = new Date();
