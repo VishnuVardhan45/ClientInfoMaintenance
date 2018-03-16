@@ -31,8 +31,10 @@ module.exports.authorizeUser = function (obj,callback) {
 }
 
 module.exports.addUser = function (obj,callback) {
+    var data = User.find({'email': obj.email}).count();
     // var data = User.findOne({'email': obj.email});
-    // if(data) return "Email Already exists";
+    if(data) return "Email Already exists";
+    obj.created_date = new Date();
     User.create(obj,callback);
 }
 
