@@ -34,13 +34,11 @@ module.exports.addUser = function (obj, callback) {
     // var data = User.find({'email': obj.email}).count();
     // // var data = User.findOne({'email': obj.email});
     // if(data) return "Email Already exists";
-    var count = 0;
-    User.find({ 'email': obj.email }, function (err, docs) {
+    User.count({ 'email': obj.email }, function (err, docs) {
         if (err) {
             return "Failed";
         }
-        count = docs.count();
-        if (count) {
+        if (docs) {
             return "Email already exists";
         } else {
             obj.created_date = new Date();
