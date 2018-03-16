@@ -32,21 +32,18 @@ module.exports.authorizeUser = function (obj, callback) {
 
 module.exports.addUser = function (obj, callback) {
     User.count({ 'email': obj.email }, function (err, docs) {
-                return function(err,docs){};
-        });
-   
-    // User.count({ 'email': obj.email }, function (err, docs) {
-    //         if(!docs){
-    //             obj.created_date = new Date();
-    //             User.create(obj, callback);
-    //         } else {
-    //              callback = function() {
-    //                 return  {data:"Email already exits"};
-                    
-    //             }
-    //             return callback;
-    //         }
-    // });
+        return function (err, docs) { };
+    });
+
+    User.count({ 'email': obj.email }, function (err, docs) {
+        if (!docs) {
+            obj.created_date = new Date();
+            var userobj = User.create(obj, callback);
+            callback(userobj);
+        } else {
+            callback({ data: "Email Already Exists" });
+        }
+    });
 }
 
 module.exports.updateUser = function (id, user, options, callback) {
