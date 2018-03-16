@@ -31,7 +31,9 @@ module.exports.authorizeUser = function (obj, callback) {
 }
 
 module.exports.addUser = function (obj, callback) {
-    User.count({ 'email': obj.email }, callback );
+    User.count({ 'email': obj.email }, function (err, docs) {
+                return function(err,docs){};
+        });
    
     // User.count({ 'email': obj.email }, function (err, docs) {
     //         if(!docs){
