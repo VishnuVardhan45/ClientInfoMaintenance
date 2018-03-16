@@ -91,6 +91,7 @@ db.once('open', function () {
             res.json(suc);
         });
     });
+
     app.post('/register', function (req, res) {
         var obj = req.body;
         User.addUser(obj, function (err, suc) {
@@ -98,6 +99,23 @@ db.once('open', function () {
                 res.json(err);
             }
             res.json(suc);
+        });
+    });
+
+    app.get('/booksinfo', function (req, res) {
+        BookImages.getBookImage(function (err, result) {
+            if (err) {
+                throw err;
+            }
+            var obj = [];
+            result.forEach(function (element) {
+                var temp = {
+                    bookId: element.bookId,
+                    image: "data:image/jpeg;base64," + new Buffer(element.image.data).toString('base64')
+                };
+                obj.push(temp);
+            }, this);
+            res.json(obj);
         });
     });
 
@@ -119,36 +137,7 @@ db.once('open', function () {
         });
     });
 
-    app.post('/bookimage', function (req, res) {
-        var data = req.body;
-        // var imageObj = {
-        //   contentType = "image/png",
-        //   image = new Buffer(data.image,"base64")
-        // }
-        var obj = {
-            bookId: data.bookId,
-            image: {
-                data: new Buffer(data.image.split(",")[1], "base64"),
-                contentType: "image/png"
-            }
-        }
-        //  res.json(obj);
-        BookImages.addImage(obj, function (err, res) {
-            if (err) {
-                res.json(err);
-            }
-            var obj = {
-                data: new Buffer(res.image.data).toString("base64")
-            }
-            res.json(obj);
-        });
-    });
-
     app.get('/', function (req, res) {
-        // res.setHeader('Access-Control-Allow-Origin', '*');
-        // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
-        // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,contenttype'); // If needed
-        // res.setHeader('Access-Control-Allow-Credentials', true); // If needed
         res.send("Hey TAG!");
     });
 
@@ -158,7 +147,30 @@ db.once('open', function () {
 
 
 
-
+// app.post('/bookimage', function (req, res) {
+//     var data = req.body;
+//     // var imageObj = {
+//     //   contentType = "image/png",
+//     //   image = new Buffer(data.image,"base64")
+//     // }
+//     var obj = {
+//         bookId: data.bookId,
+//         image: {
+//             data: new Buffer(data.image.split(",")[1], "base64"),
+//             contentType: "image/png"
+//         }
+//     }
+//     //  res.json(obj);
+//     BookImages.addImage(obj, function (err, res) {
+//         if (err) {
+//             res.json(err);
+//         }
+//         var obj = {
+//             data: new Buffer(res.image.data).toString("base64")
+//         }
+//         res.json(obj);
+//     });
+// });
 
 
 // app.get('/api/user', function (req, res) {
