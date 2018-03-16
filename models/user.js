@@ -35,9 +35,15 @@ module.exports.addUser = function (obj, callback) {
     // // var data = User.findOne({'email': obj.email});
     // if(data) return "Email Already exists";
     User.count({ 'email': obj.email }, function (err, docs) {
-            obj.created_date = new Date();
-             callback = {data: "Email Already Exits"};
-            User.create(obj, callback);
+            // {data: "Email Already Exits"};
+            if(!docs){
+                obj.created_date = new Date();
+                User.create(obj, callback);
+            } else {
+                return function() {
+                    return "Email already exits";
+                }
+            }
     });
 }
 
