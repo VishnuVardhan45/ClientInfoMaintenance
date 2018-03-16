@@ -3,8 +3,8 @@ var mongoose = require('mongoose');
 
 var userSchema = mongoose.Schema({
     name: {
-        type:String,
-        required : true
+        type: String,
+        required: true
     },
     email: {
         type: String,
@@ -26,32 +26,31 @@ var userSchema = mongoose.Schema({
 
 var User = module.exports = mongoose.model('users', userSchema);
 
-module.exports.authorizeUser = function (obj,callback) {
-    User.findOne({'email':obj.email, 'password':obj.password},'email name created_date updated_date',callback);
+module.exports.authorizeUser = function (obj, callback) {
+    User.findOne({ 'email': obj.email, 'password': obj.password }, 'email name created_date updated_date', callback);
 }
 
-module.exports.addUser = function (obj,callback) {
+module.exports.addUser = function (obj, callback) {
     // var data = User.find({'email': obj.email}).count();
     // // var data = User.findOne({'email': obj.email});
     // if(data) return "Email Already exists";
     var count = 0;
     User.find({ 'email': obj.email }, function (err, docs) {
-       if(err){
-           return "Failed";
-       } 
-       count = docs.count();
-      });
-    if(count){
-       return "Email already exists";
-    } else {
-        obj.created_date = new Date();
-        User.create(obj,callback);
-    }
-    
+        if (err) {
+            return "Failed";
+        }
+        count = docs.count();
+        if (count) {
+            return "Email already exists";
+        } else {
+            obj.created_date = new Date();
+            User.create(obj, callback);
+        }
+    });
 }
 
-module.exports.updateUser = function (id,user, options, callback) {
-    var query = {_id: id};
+module.exports.updateUser = function (id, user, options, callback) {
+    var query = { _id: id };
     var update = {
         name: user.name,
         email: user.title,
@@ -61,7 +60,7 @@ module.exports.updateUser = function (id,user, options, callback) {
     User.findOneAndUpdate(query, update, options, callback);
 }
 
-module.exports.deleteUser = function (id,callback) {
-    var query = {_id: id};
-    User.remove(query,callback);
+module.exports.deleteUser = function (id, callback) {
+    var query = { _id: id };
+    User.remove(query, callback);
 }
