@@ -102,6 +102,14 @@ db.once('open', function () {
             if (err) {
                 throw err;
             }
+            var obj = [];
+            suc.bookImages.forEach(function (element) {
+                var temp = {
+                    image: "data:image/jpeg;base64," + new Buffer(element.image.data).toString('base64')
+                };
+                obj.push(temp);
+            }, this);
+            suc.bookImages = obj;
             res.json(suc);
         });
     });
