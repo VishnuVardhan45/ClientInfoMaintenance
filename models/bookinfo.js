@@ -54,9 +54,9 @@ var bookInfoSchema = mongoose.Schema({
 var BookInfo = module.exports = mongoose.model('bookinfo', bookInfoSchema);
 
 module.exports.getBooks = function (callback, limit) {
-    BookInfo.find().populate('bookimage').exec(function(err, usersDocuments) {
-        if(err)  callback(err);
-        callback(usersDocuments);
+    BookInfo.find(callback).populate('bookimage').exec(function(err, usersDocuments) {
+        // if(err)  callback(err);
+        // callback(usersDocuments);
     });
 }
 
