@@ -106,11 +106,11 @@ db.once('open', function () {
             suc.forEach(function (sucele) {
                 sucele.bookImages.forEach(function(imgele) {
                     var temp = {
-                        image: "data:image/jpeg;base64," + new Buffer(imgele.image.data).toString('base64')
+                        image: "data:image/jpeg;base64," + new Buffer(imgele.image.data.data).toString('base64')
                     };
                     obj.push(temp);
                 }, this);
-                // sucele.bookImages = obj;
+                sucele.bookImages = obj;
             }, this);
             res.json(suc);
         });
