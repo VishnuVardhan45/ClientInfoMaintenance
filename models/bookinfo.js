@@ -45,9 +45,9 @@ var bookInfoSchema = mongoose.Schema({
         type: Date,
         default: null
     },
-    bookAcademic: [{ type: mongoose.Schema.Types.ObjectId, ref: 'bookAcademicInfo' }],
+    bookAcademic: [{ type: mongoose.Schema.Types.ObjectId, ref: 'bookAcademicInfos' }],
     bookImages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'bookimages' }],
-    bookContact: [{ type: mongoose.Schema.Types.ObjectId, ref: 'bookcontact' }]
+    bookContact: [{ type: mongoose.Schema.Types.ObjectId, ref: 'bookcontacts' }]
 });
 
 
@@ -55,7 +55,7 @@ var BookInfo = module.exports = mongoose.model('bookinfo', bookInfoSchema);
 
 module.exports.getBooks = function (callback, limit) {
     BookInfo.find()
-    .populate('bookImages bookContact bookAcademic') // multiple path names in one requires mongoose >= 3.6
+    .populate('bookImages bookContacts bookAcademics') // multiple path names in one requires mongoose >= 3.6
     .exec(function(err, usersDocuments) {
         callback(usersDocuments);
     });
