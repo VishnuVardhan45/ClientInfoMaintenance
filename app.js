@@ -103,14 +103,13 @@ db.once('open', function () {
                 throw err;
             }
             var obj = [];
-            suc.forEach(function (sucele) {
+            var tempsuc = suc;
+            tempsuc.forEach(function (sucele,index) {
                 sucele.bookImages.forEach(function(imgele) {
                     var temp = "data:image/jpeg;base64," + new Buffer(imgele.image.data).toString('base64');
                     obj.push(temp);
                 }, this);
-                // sucele.bookImagesFinal = obj;
-            res.json(obj);
-            
+                suc[index].bookImagesFinal = obj;
                 obj.length = 0;
             }, this);
             res.json(suc);
