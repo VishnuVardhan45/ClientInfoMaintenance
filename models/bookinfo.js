@@ -94,8 +94,8 @@ var bookInfoSchema = mongoose.Schema({
         default: null
     },
     bookAcademic: [{ type: mongoose.Schema.Types.ObjectId, ref: 'bookAcademicInfo' }],
-    bookImages: { type: mongoose.Schema.Types.ObjectId, ref: 'bookimages' },
-    bookContact: { type: mongoose.Schema.Types.ObjectId, ref: 'bookcontact' }
+    bookImages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'bookimages' }],
+    bookContact: [{ type: mongoose.Schema.Types.ObjectId, ref: 'bookcontact' }]
 });
 
 // var BookInfo = module.exports = mongoose.model('bookinfo', bookInfoSchema);

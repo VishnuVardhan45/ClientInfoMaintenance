@@ -57,12 +57,14 @@ db.once('open', function () {
                 if (err1) {
                     res.json(err1);
                 }
-                var bookContactIds = suc1._id;
+                var bookContactIds = [];
+                bookContactIds.push(suc1._id);
                 BookAcademic.addBookAcademic(book, function (err2, suc2) {
                     if (err2) {
                         res.json(err2);
                     }
-                    var bookAcademicIds = suc2._id ? suc2._id : null;
+                    var bookAcademicIds = [];
+                    if(suc2._id) bookAcademicIds.push(suc2._id);
                     book.bookImages = imageIds;
                     book.bookContact = bookContactIds;
                     book.bookAcademic = bookAcademicIds;
