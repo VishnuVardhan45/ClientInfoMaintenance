@@ -110,7 +110,8 @@ db.once('open', function () {
                     };
                     obj.push(temp);
                 }, this);
-                sucele.bookImages = obj;
+                // sucele.bookImages = obj;
+                obj.length = 0;
             }, this);
             res.json(suc);
         });
