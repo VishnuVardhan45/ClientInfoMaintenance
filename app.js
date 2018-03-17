@@ -103,19 +103,11 @@ db.once('open', function () {
     });
 
     app.get('/booksinfo', function (req, res) {
-        BookImages.getBookImage(function (err, result) {
+        BooksInfo.getBooks(function (err, result) {
             if (err) {
                 throw err;
             }
-            var obj = [];
-            result.forEach(function (element) {
-                var temp = {
-                    bookId: element.bookId,
-                    image: "data:image/jpeg;base64," + new Buffer(element.image.data).toString('base64')
-                };
-                obj.push(temp);
-            }, this);
-            res.json(obj);
+            res.json(result);
         });
     });
 
