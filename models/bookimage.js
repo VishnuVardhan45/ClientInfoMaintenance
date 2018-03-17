@@ -2,10 +2,6 @@ var mongoose = require('mongoose');
 
 
 var bookImageSchema = mongoose.Schema({
-    bookId: {
-        type: String,
-        required: true
-    },
     image: {
         data: Buffer,
         contentType: String
