@@ -36,7 +36,7 @@ db.once('open', function () {
         var imgFinalArr = [];
         imageArr.forEach(function (element, index) {
             var obj = {
-                bookId: "",
+                bookId: "b",
                 image: {
                     data: new Buffer(element.split(",")[1], "base64"),
                     contentType: "image/png"
@@ -52,7 +52,7 @@ db.once('open', function () {
             suc.forEach(function (element) {
                 imageIds.push(element._id);
             }, this);
-            book.bookId = "";
+            book.bookId = "b";
             BookContact.addBookContact(book, function (err1, suc1) {
                 if (err1) {
                     res.json(err1);
