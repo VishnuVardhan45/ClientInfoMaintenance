@@ -106,9 +106,7 @@ db.once('open', function () {
             var tempsuc = suc;
             tempsuc.forEach(function (sucele,index) {
                 sucele.bookImages.forEach(function(imgele,ind) {
-                    var temp = {
-                        image: "data:image/jpeg;base64," + new Buffer(imgele.image.data).toString('base64')
-                    };
+                    var temp =  "data:image/jpeg;base64," + new Buffer(imgele.image.data).toString('base64');
                     obj.push(temp);
                     suc[index].bookImages[ind].image.data = temp;
                 }, this);
