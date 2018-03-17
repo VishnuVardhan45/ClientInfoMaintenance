@@ -57,6 +57,7 @@ module.exports.getBooks = function (callback, limit) {
     BookInfo.find()
     .populate('bookImages') // multiple path names in one requires mongoose >= 3.6
     .exec(function(err, usersDocuments) {
+        if(err)  callback(err);
         callback(usersDocuments);
     });
 }
