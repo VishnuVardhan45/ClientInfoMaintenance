@@ -102,14 +102,6 @@ db.once('open', function () {
             if (err) {
                 throw err;
             }
-            // var obj = [];
-            // suc.forEach(function (sucele) {
-            //     sucele.bookImages.forEach(function(imgele) {
-            //         // var temp = "data:image/jpeg;base64," + new Buffer(imgele.image.data).toString('base64');
-            //         // obj.push(temp);
-            //     }, this);
-            //     obj.length = 0;
-            // }, this);
             res.json(suc);
         });
     });
