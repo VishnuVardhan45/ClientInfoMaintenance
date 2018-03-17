@@ -70,7 +70,7 @@ db.once('open', function () {
                         if (err3) {
                             res.json(err3);
                         }
-                        res.json(suc);
+                        res.json(suc3);
                     });
                 });
 
