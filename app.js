@@ -109,7 +109,8 @@ db.once('open', function () {
                     var temp = "data:image/jpeg;base64," + new Buffer(imgele.image.data).toString('base64');
                     obj.push(temp);
                 }, this);
-                suc[index].name = obj;
+                suc[index].bookImagesFinal = []; 
+                suc[index].bookImagesFinal = obj;
                 obj.length = 0;
             }, this);
             res.json(suc);
