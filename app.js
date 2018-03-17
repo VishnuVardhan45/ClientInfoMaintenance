@@ -103,6 +103,7 @@ db.once('open', function () {
                 throw err;
             }
             var obj = [];
+            suc = JSON(suc);
             suc.bookImages.forEach(function (element) {
                 var temp = {
                     image: "data:image/jpeg;base64," + new Buffer(element.image.data).toString('base64')
