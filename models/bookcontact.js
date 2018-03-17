@@ -30,8 +30,8 @@ module.exports.getBookContact = function (callback, limit) {
     BookContact.find(callback).limit(limit);
 }
 
-module.exports.getBookContactById = function (id,callback) {
-    BookContact.findById(id,callback);
+module.exports.getBookContactById = function (bookid,callback) {
+    BookContact.findById(bookid,callback);
 }
 
 module.exports.addBookContact = function (bookContact,callback) {

@@ -48,67 +48,10 @@ var bookInfoSchema = mongoose.Schema({
     }
 });
 
-var bookTotalDetails = mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    author: {
-        type: String,
-        required: true
-    },
-    publisher: {
-        type: String,
-        required: true
-    },
-    edition: {
-        type: String,
-        required: true
-    },
-    price: {
-        type: Number,
-        required: true
-    },
-    description: {
-        type: String,
-        required: true
-    },
-    uid: {
-        type: String,
-        required: true
-    },
-    status: {
-        type: String,
-        required: true
-    },
-    isAcademic: {
-        type: String,
-        required: true
-    },
-    created_date: {
-        type: Date,
-        default: null
-    },
-    updated_date: {
-        type: Date,
-        default: null
-    },
-    bookImages: [{ type: Schema.Types.ObjectId, ref: 'bookimages' }],
-    bookContact: [{ type: Schema.Types.ObjectId, ref: 'bookcontact' }],
-    bookAcademic: [{ type: Schema.Types.ObjectId, ref: 'bookAcademicInfo' }],
-});
-
 var BookInfo = module.exports = mongoose.model('bookinfo', bookInfoSchema);
 
-var BookTotalInfo = module.exports = mongoose.model('bookinfo', bookTotalDetails);
-
-
 module.exports.getBooks = function (callback, limit) {
-    BookTotalInfo.find()
-    .populate('bookImages bookContact') // multiple path names in one requires mongoose >= 3.6
-    .exec(function(err, usersDocuments) {
-        callback(usersDocuments);
-    });
+    BookInfo.find(callback).limit(limit);
 }
 
 module.exports.getBookById = function (id,callback) {

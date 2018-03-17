@@ -27,8 +27,8 @@ module.exports.getBookAcademic = function (callback, limit) {
     BookAcademic.find(callback).limit(limit);
 }
 
-module.exports.getBookAcademicById = function (id,callback) {
-    BookAcademic.findById(id,callback);
+module.exports.getBookAcademicById = function (bookid,callback) {
+    BookAcademic.find({'bookId':bookid},callback);
 }
 
 module.exports.addBookAcademic = function (bookAcademic,callback) {
