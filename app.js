@@ -31,56 +31,53 @@ db.once('open', function () {
 
     app.post('/postbook', function (req, res) {
         var book = req.body.bookObj;
-        var reqCount = 0;
-        BooksInfo.addBook(book, function (err, suc) {
+
+        var imageArr = req.body.imageArr;
+        var imgFinalArr = [];
+        imageArr.forEach(function (element, index) {
+            var obj = {
+                bookId: "",
+                image: {
+                    data: new Buffer(element.split(",")[1], "base64"),
+                    contentType: "image/png"
+                }
+            };
+            imgFinalArr.push(obj);
+        }, this);
+        BookImages.inserManyImages(imgFinalArr, function (err, suc) {
             if (err) {
                 res.json(err);
             }
-            reqCount++;
-            book.bookId = suc._id;
-            BookContact.addBookContact(book, function (err, suc) {
-                if (err) {
-                    res.json(err);
+            var imageIds = [];
+            suc.forEach(function (element) {
+                imageIds.push(element._id);
+            }, this);
+            book.bookId = "";
+            BookContact.addBookContact(book, function (err1, suc1) {
+                if (err1) {
+                    res.json(err1);
                 }
-                reqCount++;
-            });
-
-            if (book.isAcademic == 'Y') {
-                book.bookId = suc._id;
-                BookAcademic.addBookAcademic(book, function (err, suc) {
-                    if (err) {
-                        res.json(err);
+                var bookContactIds = suc._id;
+                BookAcademic.addBookAcademic(book, function (err2, suc2) {
+                    if (err2) {
+                        res.json(err2);
                     }
-                    reqCount++;
+                    var bookAcademicIds = suc._id;
+                    book.bookImages = imageIds;
+                    book.bookContact = bookContactIds;
+                    book.bookAcademic = bookAcademicIds;
+                    BooksInfo.addBook(book, function (err3, suc3) {
+                        if (err3) {
+                            res.json(err3);
+                        }
+                        res.json(suc);
+                    });
                 });
 
-            }
-
-
-            var imageArr = req.body.imageArr;
-            var imgFinalArr = [];
-            imageArr.forEach(function (element, index) {
-                var obj = {
-                    bookId: suc._id,
-                    image: {
-                        data: new Buffer(element.split(",")[1], "base64"),
-                        contentType: "image/png"
-                    }
-                };
-                imgFinalArr.push(obj);
-            }, this);
-            BookImages.inserManyImages(imgFinalArr, function (err, suc) {
-                if (err) {
-                    res.json(err);
-                }
-                reqCount++;
             });
-            if (reqCount == 4)
-                res.json(suc);
         });
-
-
     });
+
 
     app.post('/login', function (req, res) {
         var obj = req.body;
@@ -115,12 +112,14 @@ db.once('open', function () {
                 }
                 result.Images = suc1;
             });
-            BookAcademic.getBookAcademicById(suc._id, function (err2, suc2) {
-                if (err2) {
-                    throw err2;
-                }
-                result.academic = suc2;
-            });
+            if (suc.isAcademic == 'Y') {
+                BookAcademic.getBookAcademicById(suc._id, function (err2, suc2) {
+                    if (err2) {
+                        throw err2;
+                    }
+                    result.academic = suc2;
+                });
+            }
             BookContact.getBookContactById(suc._id, function (err3, suc3) {
                 if (err3) {
                     throw err3;
@@ -164,7 +163,7 @@ db.once('open', function () {
 //     // var imageObj = {
 //     //   contentType = "image/png",
 //     //   image = new Buffer(data.image,"base64")
-//     // }
+///===//     // }
 //     var obj = {
 //         bookId: data.bookId,
 //         image: {

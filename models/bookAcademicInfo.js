@@ -4,8 +4,7 @@ var mongoose = require('mongoose');
 var bookAcademicSchema = mongoose.Schema({
     bookId: {
         type: String,
-        required: true,
-        index: true
+        required: true
     },
     course: {
         type: String
