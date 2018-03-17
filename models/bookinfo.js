@@ -54,11 +54,7 @@ var bookInfoSchema = mongoose.Schema({
 var BookInfo = module.exports = mongoose.model('bookinfo', bookInfoSchema);
 
 module.exports.getBooks = function (callback, limit) {
-    BookInfo.find()
-    .populate('bookImages bookContacts bookAcademics') // multiple path names in one requires mongoose >= 3.6
-    .exec(function(err, usersDocuments) {
-        callback(usersDocuments);
-    });
+    BookInfo.find(callback);
 }
 
 module.exports.getBookById = function (id,callback) {
