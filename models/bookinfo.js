@@ -45,18 +45,16 @@ var bookInfoSchema = mongoose.Schema({
         type: Date,
         default: null
     },
-    bookAcademic: [{ type: mongoose.Schema.Types.ObjectId, ref: 'bookAcademicInfos' }],
-    bookImages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'bookimages' }],
-    bookContact: [{ type: mongoose.Schema.Types.ObjectId, ref: 'bookcontacts' }]
+    bookAcademic: [{ type: mongoose.Schema.Types.ObjectId, ref: 'bookAcademicInfo' }],
+    bookImages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'bookimage' }],
+    bookContact: [{ type: mongoose.Schema.Types.ObjectId, ref: 'bookcontact' }]
 });
 
 
 var BookInfo = module.exports = mongoose.model('bookinfo', bookInfoSchema);
 
 module.exports.getBooks = function (callback, limit) {
-    BookInfo.find()
-    .populate('bookImages') // multiple path names in one requires mongoose >= 3.6
-    .exec(function(err, usersDocuments) {
+    BookInfo.find().populate('bookimage').exec(function(err, usersDocuments) {
         if(err)  callback(err);
         callback(usersDocuments);
     });
