@@ -69,7 +69,7 @@ db.once('open', function () {
                     BooksInfo.addBook(book, function (err3, suc3) {
                         if (err3) {
                             res.json(err3);
-                        }
+                        };
                         res.json(suc3);
                     });
                 });
