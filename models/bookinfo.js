@@ -48,76 +48,67 @@ var bookInfoSchema = mongoose.Schema({
     }
 });
 
-// var bookTotalDetails = mongoose.Schema({
-//     name: {
-//         type: String,
-//         required: true
-//     },
-//     author: {
-//         type: String,
-//         required: true
-//     },
-//     publisher: {
-//         type: String,
-//         required: true
-//     },
-//     edition: {
-//         type: String,
-//         required: true
-//     },
-//     price: {
-//         type: Number,
-//         required: true
-//     },
-//     description: {
-//         type: String,
-//         required: true
-//     },
-//     uid: {
-//         type: String,
-//         required: true
-//     },
-//     status: {
-//         type: String,
-//         required: true
-//     },
-//     isAcademic: {
-//         type: String,
-//         required: true
-//     },
-//     created_date: {
-//         type: Date,
-//         default: null
-//     },
-//     updated_date: {
-//         type: Date,
-//         default: null
-//     },
-//     bookImages: [{ type: Schema.Types.ObjectId, ref: 'BookImage' }],
-//     bookContact: [{ type: Schema.Types.ObjectId, ref: 'BookContact' }],
-//     bookAcademic: [{ type: Schema.Types.ObjectId, ref: 'BookAcademic' }],
-// });
+var bookTotalDetails = mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    author: {
+        type: String,
+        required: true
+    },
+    publisher: {
+        type: String,
+        required: true
+    },
+    edition: {
+        type: String,
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    uid: {
+        type: String,
+        required: true
+    },
+    status: {
+        type: String,
+        required: true
+    },
+    isAcademic: {
+        type: String,
+        required: true
+    },
+    created_date: {
+        type: Date,
+        default: null
+    },
+    updated_date: {
+        type: Date,
+        default: null
+    },
+    bookImages: [{ type: Schema.Types.ObjectId, ref: 'bookimages' }],
+    bookContact: [{ type: Schema.Types.ObjectId, ref: 'bookcontact' }],
+    bookAcademic: [{ type: Schema.Types.ObjectId, ref: 'bookAcademicInfo' }],
+});
 
 var BookInfo = module.exports = mongoose.model('bookinfo', bookInfoSchema);
 
-// var BookTotalInfo = module.exports = mongoose.model('bookinfo', bookTotalDetails);
+var BookTotalInfo = module.exports = mongoose.model('bookinfo', bookTotalDetails);
 
 
 module.exports.getBooks = function (callback, limit) {
-    // BookTotalInfo.find(callback).limit(limit);
-    BookInfo.aggregate([
-        { $lookup:
-           {
-             from: 'bookcontact',
-             localField: '_id',
-             foreignField: 'bookId',
-             as: 'orderdetails'
-           }
-         }
-        ]).toArray(function(err, res) {
-        if (err) throw err;
-        callback(res);
-      });
+    BookTotalInfo.find()
+    .populate('bookImages bookContact') // multiple path names in one requires mongoose >= 3.6
+    .exec(function(err, usersDocuments) {
+        callback(usersDocuments);
+    });
 }
 
 module.exports.getBookById = function (id,callback) {
