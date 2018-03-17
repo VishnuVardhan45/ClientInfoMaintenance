@@ -1,53 +1,5 @@
 var mongoose = require('mongoose');
 
-
-// var bookInfoSchema = mongoose.Schema({
-//     name: {
-//         type: String,
-//         required: true
-//     },
-//     author: {
-//         type: String,
-//         required: true
-//     },
-//     publisher: {
-//         type: String,
-//         required: true
-//     },
-//     edition: {
-//         type: String,
-//         required: true
-//     },
-//     price: {
-//         type: Number,
-//         required: true
-//     },
-//     description: {
-//         type: String,
-//         required: true
-//     },
-//     uid: {
-//         type: String,
-//         required: true
-//     },
-//     status: {
-//         type: String,
-//         required: true
-//     },
-//     isAcademic: {
-//         type: String,
-//         required: true
-//     },
-//     created_date: {
-//         type: Date,
-//         default: null
-//     },
-//     updated_date: {
-//         type: Date,
-//         default: null
-//     }
-// });
-
 var bookInfoSchema = mongoose.Schema({
     name: {
         type: String,
@@ -98,10 +50,8 @@ var bookInfoSchema = mongoose.Schema({
     bookContact: [{ type: mongoose.Schema.Types.ObjectId, ref: 'bookcontact' }]
 });
 
-// var BookInfo = module.exports = mongoose.model('bookinfo', bookInfoSchema);
 
 var BookInfo = module.exports = mongoose.model('bookinfo', bookInfoSchema);
-
 
 module.exports.getBooks = function (callback, limit) {
     BookInfo.find()

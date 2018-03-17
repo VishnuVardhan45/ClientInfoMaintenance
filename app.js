@@ -80,7 +80,6 @@ db.once('open', function () {
         });
     });
 
-
     app.post('/login', function (req, res) {
         var obj = req.body;
         User.authorizeUser(obj, function (err, suc) {
@@ -102,33 +101,11 @@ db.once('open', function () {
     });
 
     app.get('/booksinfo', function (req, res) {
-        var result = {};
         BooksInfo.getBooks(function (err, suc) {
             if (err) {
                 throw err;
             }
-            result.bookinfo = suc;
-            BookImages.getBookImageById(suc._id, function (err1, suc1) {
-                if (err1) {
-                    throw err1;
-                }
-                result.Images = suc1;
-            });
-            if (suc.isAcademic == 'Y') {
-                BookAcademic.getBookAcademicById(suc._id, function (err2, suc2) {
-                    if (err2) {
-                        throw err2;
-                    }
-                    result.academic = suc2;
-                });
-            }
-            BookContact.getBookContactById(suc._id, function (err3, suc3) {
-                if (err3) {
-                    throw err3;
-                }
-                result.contact = suc3;
-            });
-            res.json(result);
+            res.json(suc);
         });
     });
 
