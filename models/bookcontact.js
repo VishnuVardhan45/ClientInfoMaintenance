@@ -3,7 +3,8 @@ var mongoose = require('mongoose');
 var bookContactSchema = mongoose.Schema({
     bookId: {
         type: String,
-        required: true
+        required: true,
+        index: true
     },
     phoneNo: {
         type: String

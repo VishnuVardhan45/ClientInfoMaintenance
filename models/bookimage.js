@@ -4,7 +4,8 @@ var mongoose = require('mongoose');
 var bookImageSchema = mongoose.Schema({
     bookId: {
         type: String,
-        required: true
+        required: true,
+        index: true
     },
     image: {
         data: Buffer,
