@@ -62,7 +62,7 @@ db.once('open', function () {
                         res.json(err2);
                     }
                     var bookAcademicIds = [];
-                    if(suc2._id) bookAcademicIds.push(suc2._id);
+                    if (suc2._id) bookAcademicIds.push(suc2._id);
                     book.bookImages = imageIds;
                     book.bookContact = bookContactIds;
                     book.bookAcademic = bookAcademicIds;
@@ -106,6 +106,14 @@ db.once('open', function () {
         });
     });
 
+    app.get('/booksinfo/:_id', function (req, res) {
+        BooksInfo.getBookById(req.params._id, function (err, book) {
+            if (err) {
+                console.log(err);
+            }
+            res.json(book);
+        });
+    });
 
     app.get('/bookimage', function (req, res) {
         BookImages.getBookImage(function (err, result) {

@@ -64,7 +64,13 @@ module.exports.getBooks = function (callback, limit) {
 }
 
 module.exports.getBookById = function (id,callback) {
-    BookInfo.findById(id,callback);
+    BookInfo.find({'uid': id}).lean()
+    .populate('bookAcademic')
+    .populate('bookImages')
+    .populate('bookContact')
+    .exec(function(err, usersDocuments) {
+        callback(err,usersDocuments);
+    });
 }
 
 module.exports.addBook = function (book,callback) {
