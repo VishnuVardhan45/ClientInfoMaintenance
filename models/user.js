@@ -16,13 +16,37 @@ var userSchema = mongoose.Schema({
     userdob: {
         type: Date,
         required: true
+    },
+    custid : {
+      type: Number,
+      required : true
+    },
+    roleid : {
+      type: Number,
+      required: true
+    },
+    roleprovdate : {
+      type : Date,
+      required:true
+    },
+    roleenddate : {
+      type : Date,
+      required : true
+    },
+    usersecquestion : {
+      type : String,
+      required: true
+    },
+    usersecanswer : {
+     type : String,
+     required: true
     }
 });
 
 var User = module.exports = mongoose.model('usermaster', userSchema);
 
 module.exports.authorizeUser = function (obj, callback) {
-    User.findOne({ 'user_email_address':  obj.email, 'user_encrypted_pwd': obj.password }, '_id email name created_date updated_date', callback);
+    User.findOne({ 'user_email_address':  obj.email, 'user_encrypted_pwd': obj.password }, '_id user_email_address user_dob cust_id role_id role_prov_date role_end_date user_sec_question user_sec_answer', callback);
 }
 
 module.exports.addUser = function (obj, callback) {
