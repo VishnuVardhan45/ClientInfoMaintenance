@@ -2,33 +2,27 @@ var mongoose = require('mongoose');
 
 
 var userSchema = mongoose.Schema({
-    name: {
+    id:{
+        type : String
+    },
+    useremailaddress: {
         type: String,
         required: true
     },
-    email: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    password: {
+    userencryptedpwd: {
         type: String,
         required: true
     },
-    created_date: {
+    userdob: {
         type: Date,
-        default: null
-    },
-    updated_date: {
-        type: Date,
-        default: null
+        required: true
     }
 });
 
-var User = module.exports = mongoose.model('users', userSchema);
+var User = module.exports = mongoose.model('usermaster', userSchema);
 
 module.exports.authorizeUser = function (obj, callback) {
-    User.findOne({ 'email':  obj.email, 'password': obj.password }, '_id email name created_date updated_date', callback);
+    User.findOne({ 'user_email_address':  obj.email, 'user_encrypted_pwd': obj.password }, '_id email name created_date updated_date', callback);
 }
 
 module.exports.addUser = function (obj, callback) {

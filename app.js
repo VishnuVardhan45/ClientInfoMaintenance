@@ -7,10 +7,11 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
-BooksInfo = require('./models/bookinfo');
+/*BooksInfo = require('./models/bookinfo');
 BookImages = require('./models/bookimage');
 BookContact = require('./models/bookcontact');
-BookAcademic = require('./models/bookAcademicInfo');
+BookAcademic = require('./models/bookAcademicInfo');*/
+CustomerInfo = require('./models/customerinfo');
 User = require('./models/user');
 
 
@@ -19,7 +20,8 @@ var options = {
     server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
     replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }
 };
-var mongodbUri = 'mongodb://thallapa:xqytw246@ds147274.mlab.com:47274/bmb';
+var mongodbUri = 'mongodb://clientdbuser:clientdbpwd@ec2-54-145-92-130.compute-1.amazonaws.com:27017/clientinfo_db';
+//var mongodbUri = 'mongodb://localhost/clientinfo_db';
 // mongoose.connect('mongodb://localhost/BMB');
 mongoose.connect(mongodbUri);
 
@@ -27,9 +29,9 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
 db.once('open', function () {
-    // Wait for the database connection to establish, then start the app.    
+    // Wait for the database connection to establish, then start the app.
 
-    app.post('/postbook', function (req, res) {
+  /*  app.post('/postbook', function (req, res) {
         var book = req.body.bookObj;
 
         var imageArr = req.body.imageArr;
@@ -76,9 +78,10 @@ db.once('open', function () {
             });
         });
     });
-
+*/
     app.post('/login', function (req, res) {
         var obj = req.body;
+        console.log(JSON.stringify(obj));
         User.authorizeUser(obj, function (err, suc) {
             if (err) {
                 res.json(err);
@@ -86,7 +89,7 @@ db.once('open', function () {
             res.json(suc);
         });
     });
-
+/*
     app.post('/register', function (req, res) {
         var obj = req.body;
         User.addUser(obj, function (err, suc) {
@@ -105,7 +108,17 @@ db.once('open', function () {
             res.json(suc);
         });
     });
+*/
+    app.get('/customerinfo', function (req, res) {
+        CustomerInfo.getCustomerInfo(function (err, suc) {
+            if (err) {
+                throw err;
+            }
+            res.json(suc);
+        });
+    });
 
+/*
     app.get('/booksinfo/:_id', function (req, res) {
         BooksInfo.getBookById(req.params._id, function (err, book) {
             if (err) {
@@ -131,7 +144,7 @@ db.once('open', function () {
             res.json(obj);
         });
     });
-
+*/
     app.get('/', function (req, res) {
         res.send("Hey TAG!");
     });
@@ -225,4 +238,3 @@ db.once('open', function () {
 //         res.json(book);
 //     });
 // });
-
